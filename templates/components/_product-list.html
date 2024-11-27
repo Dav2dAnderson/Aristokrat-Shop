@@ -1,0 +1,65 @@
+
+<div id="fh5co-product">
+    <div class="container">
+        <div class="row animate-box">
+            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+                <span>Cool Stuff</span>
+                <h2>Products.</h2>
+                <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+            </div>
+        </div>
+        {% if results %}
+        <div class="row">
+            {% for result in results %}
+            <div class="col-md-4 text-center animate-box">
+                <div class="product">
+                    <div class="product-grid" style="background-image: url({{result.image.url}});">
+                        <div class="inner">
+                            <p>
+                                <a href="{% url 'single' result.id %}" class="icon"><i class="icon-eye"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                    <form method="POST" action="{% url 'add-to-cart' result.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="icon">
+                            <i class="icon-shopping-cart"></i>
+                        </button>
+                    </form>
+                    <div class="desc">
+                        <h3><a href="{% url 'single' result.id %}">{{ result.title }}</a></h3>
+                        <span class="price">{{ result.price }} SO'M</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4 text-center animate-box">
+                <div class="product">
+                    <div class="product-grid" style="background-image: url({{product.image.url}});">
+                        <div class="inner">
+                            <p>
+                                <a href="{% url 'single' product.id %}" class="icon"><i class="icon-eye"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                    <form method="POST" action="{% url 'add-to-cart' product.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="icon">
+                            <i class="icon-shopping-cart"></i>
+                        </button>
+                    </form>
+                    <div class="desc">
+                        <h3><a href="{% url 'single' product.id %}">{{ product.title }}</a></h3>
+                        <span class="price">{{ product.price }} SO'M</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>

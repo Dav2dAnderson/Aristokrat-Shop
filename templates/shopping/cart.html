@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savatcha</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .cart-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .product-price {
+            color: #777;
+        }
+
+        .remove-btn, .quantity-btn {
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background-color: #ff3333;
+        }
+
+        .quantity-btn {
+            background-color: #4CAF50;
+            margin: 0 5px;
+        }
+
+        .quantity-btn:hover {
+            background-color: #45a049;
+        }   
+
+        .confirm-order {
+            background-color: #4CAF50;
+            color:#fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0,3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Savatcha</h1>
+        {% if cart_items %}
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <div class="product-info">
+                <p class="product-name">{{ item.product.title }}</p>
+                <p class="product-price">Narxi: {{ item.product.price }} Soni: {{ item.quantity }} Jami: {{ item.get_total }}</p>
+            </div>
+            <div>
+                <!-- Decrease quantity button -->
+                <form method="post" action="{% url 'update-cart' item.id %}" style="display: inline;"> {% csrf_token %}
+                    <button class="quantity-btn" name="action" value="plus">+1</button>
+                    <button class="quantity-btn" name="action" value="minus">-1</button>
+                </form>
+
+                <!-- Remove item button -->
+                <form method="post" action="{% url 'delete-cart' item.id %}" style="display: inline;"> {% csrf_token %}
+                    <button class="remove-btn">O'chirish</button>
+                </form>
+            </div>
+        </div>
+        <form method="post" style="display: inline; margin-left: 200px;" action="{% url 'check-out' %}"> {% csrf_token %}
+            <button class="confirm-order">Buyurtma berish</button>
+        </form>
+        {% endfor %}
+        {% else %}
+        <h5 style="text-align: center;">Savatcha bo'sht</h5>
+        {% endif %}
+    </div>
+</body>
+</html>

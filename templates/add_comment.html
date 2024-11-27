@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izoh Qo'shish</title>
+    <style>
+        /* Sahifa umumiy uslublari */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+
+        /* Izoh shakli */
+        .comment-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .comment-form h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #333;
+            resize: vertical;
+        }
+
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .comment-form button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .comment-form button:hover {
+            background-color: #357ab7;
+        }
+
+        /* Avtorizatsiya qilinmagan foydalanuvchilar uchun xabar */
+        .login-message {
+            color: #333;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Foydalanuvchi avtorizatsiyadan o'tgan holatda ko'rinadi -->
+    <div class="comment-form" id="commentForm">
+        <h2>Izoh Qo'shish</h2>
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
+        <form action="#" method="post"> {% csrf_token %}
+            <textarea id="comment" name="comment" rows="4" placeholder="Izohingizni kiriting" required></textarea>
+            <button type="submit">Izoh Qo'shish</button>
+        </form>
+    </div>
+</body>
+</html>
